@@ -37,10 +37,11 @@ export class CreateleaguePage implements OnInit {
   createLeague(value){
     console.log(value.title);
     console.log(value.roster);
-    this.leagueService.createLeague(value.title, value.roster).then(
-      this.initRosters()).catch(function(error) {
-          console.error("Error updating document: ", error);
-      });
+    this.leagueService.createLeague(value.title, value.roster);
+    setTimeout(()=>{
+      this.initRosters();
+    },1000);
+
 
 
   	this.goBack();

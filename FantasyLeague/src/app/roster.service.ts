@@ -8,6 +8,7 @@ import {Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RosterService {
   param:any;
   id:any;
@@ -15,10 +16,7 @@ export class RosterService {
   db=firebase.firestore();
   players:any;
   roster:Array<any>=[];
-  //Need to add players array to template
-  rosters_template:Array<any>=[
-    {Team: 'default', id: 'default', invCode: 'default'}
-  ];
+  rosters_template:Array<any>=[];
 
 
   //event notification
@@ -114,14 +112,31 @@ getObservable(): Subject<any> {
     }
 
     initializeRosters(league_id){
+      let userId = firebase.auth().currentUser.uid;
+      this.rosters_template.push({
+        Team:'default',
+        id:userId,
+        invCode:'default'
+      })
       var self=this;
       var db=firebase.firestore();
-      db.collection("leagues").doc(league_id).update(this.rosters_template);
-      console.log("Updated " + league_id + "with roster template.")
+      db.collection("leagues").doc(league_id).update(self.rosters_template);
+      console.log("Updated " + league_id + "with rosterList template.")
     }
 
 
 }
+
+
+export class Roster {
+Team: string;
+id: string;
+invCode: string;
+constructor(player_id: string) {
+    this.id = player_id;
+  }
+}
+
 
 export const snapshotToArray = snapshot => {
   let returnArr = [];
