@@ -13,6 +13,10 @@
     <ion-label position="floating" autofocus="true">League Name</ion-label>
     <ion-input type="text" formControlName="title" required></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label position="floating" autofocus="true">Your Team Name</ion-label>
+    <ion-input type="text" formControlName="roster" required></ion-input>
+  </ion-item>
 
 <ion-button class="submit-btn" expand="block" type="submit" [disabled]="!new_league_form.valid">Create League</ion-button>
 </form>

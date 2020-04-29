@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class LeagueService {
   private eventSubject=new Subject<any>();
   db=firebase.firestore();
   leagues:Array<any>=[];
+  rosterName:any;
 
   //event notification
   publishEvent(data: any) {
@@ -44,7 +46,8 @@ export class LeagueService {
         } );
   }
 
-  createLeague(title){
+  createLeague(title, roster){
+
       var self=this;
       var uid=null;
 
@@ -57,8 +60,9 @@ export class LeagueService {
         })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
+            self.id = docRef.id;
+            self.rosterName = roster;
 
-            //update this products arrays
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);

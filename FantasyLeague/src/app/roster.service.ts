@@ -15,6 +15,11 @@ export class RosterService {
   db=firebase.firestore();
   players:any;
   roster:Array<any>=[];
+  //Need to add players array to template
+  rosters_template:Array<any>=[
+    {Team: 'default', id: 'default', invCode: 'default'}
+  ];
+
 
   //event notification
   publishEvent(data: any) {
@@ -25,7 +30,7 @@ getObservable(): Subject<any> {
 }
 
   constructor(public router:Router,
-    ) { 
+    ) {
       var self=this;
 
       if(firebase.auth().currentUser!=null){
@@ -39,11 +44,11 @@ getObservable(): Subject<any> {
                   uid:roster.uid,id:doc.id})
                   self.players=roster.players;
              });
- 
+
              self.publishEvent({
                  foo: 'bar'
              });
- 
+
              console.log("items reloaded");
          } );
       }
@@ -64,16 +69,16 @@ getObservable(): Subject<any> {
                uid:roster.uid,id:doc.id})
                self.players=roster.players;
              });
-  
+
              self.publishEvent({
                  foo: 'bar'
              });
-  
+
              console.log("items reloaded");
          } );
       }
     }
-    
+
 
     getRoster():any{
       var RosterObservable = new Observable(observer => {
@@ -83,7 +88,7 @@ getObservable(): Subject<any> {
   });
       return RosterObservable;
     }
-  
+
     getPlayers():any{
       var playersObservable=new Observable(observer =>{
         setTimeout(()=>{
@@ -104,9 +109,17 @@ getObservable(): Subject<any> {
       }).catch(function(error){
         console.error("error removing document: ",error);
       });
-    
-    
+
+
     }
+
+    initializeRosters(league_id){
+      var self=this;
+      var db=firebase.firestore();
+      db.collection("leagues").doc(league_id).update(this.rosters_template);
+      console.log("Updated " + league_id + "with roster template.")
+    }
+
 
 }
 
