@@ -4,7 +4,7 @@ $npm install
 $npm install firebase  
 $ionic serve at FantasyLeague directory
 
-### Instructions to Deploy to Android (oof)  
+### Instructions to Deploy to Android    
 See Steven E.  
 
 
